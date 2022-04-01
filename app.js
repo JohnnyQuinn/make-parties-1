@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // INDEX
 app.get('/', (req, res) => {
-  models.Event.findAll().then(events => {
+  models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
     res.render('events-index', { events: events });
   })
 })
