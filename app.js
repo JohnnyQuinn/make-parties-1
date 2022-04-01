@@ -1,30 +1,26 @@
-// Require Libraries
-const express = require('express');
+// Initialize express
+const express = require('express')
+const app = express()
 
-// App Setup
-const app = express();
+// require handlebars
+const exphbs = require('express-handlebars');
+const Handlebars = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
-// Middleware
-const exphbs  = require('express-handlebars');
-
-app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
+// Use "main" as our default layout
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main', handlebars: allowInsecurePrototypeAccess(Handlebars) }));
+// Use handlebars to render
 app.set('view engine', 'handlebars');
 
-// Routes
+// Tell our app to send the "hello world" message to our home page
 app.get('/', (req, res) => {
-    console.log(req.query) // => "{ term: hey" }[/bold]
-    res.render('home')
+  res.render('home', { msg: 'Handlebars are Cool!' });
 })
 
-app.get('/greetings/:name', (req, res) => {
-    // grab the name from the path provided
-    const name = req.params.name;
-    // render the greetings view, passing along the name
-    res.render('greetings', { name });
+// Choose a port to listen on
+const port = process.env.PORT || 3000;
+
+// Tell the app what port to listen on
+app.listen(port, () => {
+  console.log('App listening on port 3000!')
 })
-
-// Start Server
-app.listen(3000, () => {
-  console.log('Gif Search listening on port localhost:3000!');
-});
-
