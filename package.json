@@ -1,0 +1,23 @@
+{
+  "name": "make-parties-1",
+  "version": "1.0.0",
+  "description": "Come join the party! Learn all about how to use Node.js and Handlebars to build a web app where people can create and RSVP to events!",
+  "main": "app.js",
+  "dependencies": {
+    "remark-preset-lint-make-school": "^1.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnnyQuinn/make-parties-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohnnyQuinn/make-parties-1/issues"
+  },
+  "homepage": "https://github.com/JohnnyQuinn/make-parties-1#readme"
+}
