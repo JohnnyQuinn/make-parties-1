@@ -1,5 +1,8 @@
 // Initialize express
 const express = require('express')
+const bodyParser = require('body-parser');
+const models = require('./db/models');
+
 const app = express()
 
 // require handlebars
@@ -12,9 +15,22 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main', handlebars: allo
 // Use handlebars to render
 app.set('view engine', 'handlebars');
 
-// Tell our app to send the "hello world" message to our home page
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// INDEX
 app.get('/', (req, res) => {
-  res.render('events-index', { events: events });
+  models.Event.findAll().then(events => {
+    res.render('events-index', { events: events });
+  })
+})
+
+// CREATE
+app.post('/events', (req, res) => {
+  models.Event.create(req.body).then(event => {
+    res.redirect(`/`);
+  }).catch((err) => {
+    console.log(err)
+  });
 })
 
 var events = [
@@ -22,6 +38,10 @@ var events = [
   { title: "I am your second event", desc: "A great event that is super fun to look at and good", imgUrl: "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn" },
   { title: "I am your third event", desc: "A great event that is super fun to look at and good", imgUrl: "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn" }
 ]
+
+app.get('/events/new', (req, res) => {
+  res.render('events-new', {});
+})
 
 // Choose a port to listen on
 const port = process.env.PORT || 3000;
